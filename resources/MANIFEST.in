@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include {{ SAFE_NAME }}/static *
+recursive-include {{ SAFE_NAME }}/templates *

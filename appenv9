@@ -1,0 +1,69 @@
+#!/usr/bin/bash
+
+if [ $# -eq 0 ]; then
+	echo "[ERROR] No name specified"
+	exit 1
+fi
+
+PREFIX=django-
+DJANGO_VERSION=1.6.5
+PYTHON_VERSION=2.7
+
+AUTHOR_NAME=$(git config user.name)
+AUTHOR_EMAIL=$(git config user.email)
+
+NAME=$1
+SAFE_NAME="${NAME//-/_}"
+FULL_NAME=$PREFIX$NAME
+
+URL="https://pypi.python.org/pypi/$FULL_NAME"
+
+YEAR=$(date +"%Y")
+
+mkdir $FULL_NAME
+
+rm -f app_template.zip
+zip -r app_template.zip app_template
+
+rm -f project_template.zip
+zip -r project_template.zip project_template
+
+cd $FULL_NAME
+
+	django-admin startapp --template=../app_template.zip $SAFE_NAME
+
+	sed 's/{{ SAFE_NAME }}/'"$SAFE_NAME"'/' ../resources/MANIFEST.in > MANIFEST.in
+	sed 's/{{ FULL_NAME }}/'"$FULL_NAME"'/' ../resources/README.md > README.md
+	sed 's/{{ YEAR }}/'"$YEAR"'/' ../resources/LICENSE > LICENSE
+	sed -i 's/{{ AUTHOR_NAME }}/'"$AUTHOR_NAME"'/' LICENSE
+
+	sed 's/{{ NAME }}/'"$NAME"'/' ../resources/setup.py > setup.py
+	sed -i 's/{{ SAFE_NAME }}/'"$SAFE_NAME"'/' setup.py
+	sed -i 's/{{ DJANGO_VERSION }}/'"$DJANGO_VERSION"'/' setup.py
+	sed -i 's/{{ AUTHOR_NAME }}/'"$AUTHOR_NAME"'/' setup.py
+	sed -i 's/{{ AUTHOR_EMAIL }}/'"$AUTHOR_EMAIL"'/' setup.py
+	sed -i 's|{{ URL }}|'"$URL"'|' setup.py
+
+	django-admin startproject --template=../project_template.zip demo
+	cd demo
+		sed -i 's/{{ DJANGO_VERSION }}/'"$DJANGO_VERSION"'/' requirements.txt
+		sed -i 's/{{ PYTHON_VERSION }}/'"$PYTHON_VERSION"'/' makefile
+		sed -i 's/||APP_NAME||/'"$SAFE_NAME"'/' makefile
+		cd demo
+			sed -i 's/||APP_NAME||/'"$SAFE_NAME"'/' settings.py
+		cd ..
+		cd virtualenv
+			virtualenv demo
+		cd ..
+		make install
+	cd ..
+
+	cp ../resources/.gitignore .gitignore
+
+	git init
+	git add -A
+	git commit -m "Initial commit"
+	git checkout -b development
+
+cd ..
+
