@@ -33,7 +33,7 @@ cd $FULL_NAME
 	django-admin startapp --template=../app_template.zip $SAFE_NAME
 
 	sed 's/{{ SAFE_NAME }}/'"$SAFE_NAME"'/' ../resources/MANIFEST.in > MANIFEST.in
-	sed 's/{{ FULL_NAME }}/'"$FULL_NAME"'/' ../resources/README.md > README.md
+	sed 's/{{ FULL_NAME }}/'"$FULL_NAME"'/' ../resources/README.rst > README.rst
 	sed 's/{{ YEAR }}/'"$YEAR"'/' ../resources/LICENSE > LICENSE
 	sed -i 's/{{ AUTHOR_NAME }}/'"$AUTHOR_NAME"'/' LICENSE
 
@@ -57,7 +57,8 @@ cd $FULL_NAME
 		cd ..
 		make install
 	cd ..
-
+	
+	cp ../resources/makefile makefile
 	cp ../resources/.gitignore .gitignore
 
 	git init
