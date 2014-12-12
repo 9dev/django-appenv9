@@ -60,6 +60,7 @@ cd $FULL_NAME
 	
 	cp ../resources/makefile makefile
 	cp ../resources/.gitignore .gitignore
+	touch .todo
 
 	git init
 	git add -A
