@@ -20,31 +20,35 @@ URL="https://pypi.python.org/pypi/$FULL_NAME"
 
 YEAR=$(date +"%Y")
 
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+cd $DIR
+	rm -f app_template.zip
+	zip -r app_template.zip app_template
+
+	rm -f project_template.zip
+	zip -r project_template.zip project_template
+cd ..
+
 mkdir $FULL_NAME
-
-rm -f app_template.zip
-zip -r app_template.zip app_template
-
-rm -f project_template.zip
-zip -r project_template.zip project_template
 
 cd $FULL_NAME
 
-	django-admin startapp --template=../app_template.zip $SAFE_NAME
+	django-admin startapp --template="$DIR/app_template.zip" $SAFE_NAME
 
-	sed 's/{{ SAFE_NAME }}/'"$SAFE_NAME"'/' ../resources/MANIFEST.in > MANIFEST.in
-	sed 's/{{ FULL_NAME }}/'"$FULL_NAME"'/' ../resources/README.rst > README.rst
-	sed 's/{{ YEAR }}/'"$YEAR"'/' ../resources/LICENSE > LICENSE
+	sed 's/{{ SAFE_NAME }}/'"$SAFE_NAME"'/' "$DIR/resources/MANIFEST.in" > MANIFEST.in
+	sed 's/{{ FULL_NAME }}/'"$FULL_NAME"'/' "$DIR/resources/README.rst" > README.rst
+	sed 's/{{ YEAR }}/'"$YEAR"'/' "$DIR/resources/LICENSE" > LICENSE
 	sed -i 's/{{ AUTHOR_NAME }}/'"$AUTHOR_NAME"'/' LICENSE
 
-	sed 's/{{ NAME }}/'"$NAME"'/' ../resources/setup.py > setup.py
+	sed 's/{{ NAME }}/'"$NAME"'/' "$DIR/resources/setup.py" > setup.py
 	sed -i 's/{{ SAFE_NAME }}/'"$SAFE_NAME"'/' setup.py
 	sed -i 's/{{ DJANGO_VERSION }}/'"$DJANGO_VERSION"'/' setup.py
 	sed -i 's/{{ AUTHOR_NAME }}/'"$AUTHOR_NAME"'/' setup.py
 	sed -i 's/{{ AUTHOR_EMAIL }}/'"$AUTHOR_EMAIL"'/' setup.py
 	sed -i 's|{{ URL }}|'"$URL"'|' setup.py
 
-	django-admin startproject --template=../project_template.zip demo
+	django-admin startproject --template="$DIR/project_template.zip" demo
 	cd demo
 		sed -i 's/{{ DJANGO_VERSION }}/'"$DJANGO_VERSION"'/' requirements.txt
 		sed -i 's/{{ PYTHON_VERSION }}/'"$PYTHON_VERSION"'/' makefile
@@ -58,8 +62,8 @@ cd $FULL_NAME
 		make install
 	cd ..
 	
-	cp ../resources/makefile makefile
-	cp ../resources/.gitignore .gitignore
+	cp "$DIR/resources/makefile" makefile
+	cp "$DIR/resources/.gitignore" .gitignore
 	touch .todo
 
 	git init
