@@ -1,10 +1,10 @@
 include LICENSE
 include README.md
-recursive-include uecookie9/static *
-recursive-include uecookie9/templates *
-recursive-include uecookie9/templatetags *
-recursive-include uecookie9/management *
-recursive-include uecookie9/fixtures *
-recursive-include uecookie9/resources *
+recursive-include {{ SAFE_NAME }}/static *
+recursive-include {{ SAFE_NAME }}/templates *
+recursive-include {{ SAFE_NAME }}/templatetags *
+recursive-include {{ SAFE_NAME }}/management *
+recursive-include {{ SAFE_NAME }}/fixtures *
+recursive-include {{ SAFE_NAME }}/resources *
 global-exclude *pyc
 global-exclude ~*
