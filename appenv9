@@ -64,7 +64,7 @@ cd $FULL_NAME
 	
 	cp "$DIR/resources/makefile" makefile
 	cp "$DIR/resources/.gitignore" .gitignore
-	touch .todo
+	touch todo.txt
 
 	git init
 	git add -A
