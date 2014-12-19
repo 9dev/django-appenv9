@@ -38,6 +38,7 @@ cd $FULL_NAME
 
 	sed 's/{{ SAFE_NAME }}/'"$SAFE_NAME"'/' "$DIR/resources/MANIFEST.in" > MANIFEST.in
 	sed 's/{{ FULL_NAME }}/'"$FULL_NAME"'/' "$DIR/resources/README.rst" > README.rst
+	sed -i 's/{{ NAME }}/'"$SAFE_NAME"'/' README.rst
 	sed 's/{{ YEAR }}/'"$YEAR"'/' "$DIR/resources/LICENSE" > LICENSE
 	sed -i 's/{{ AUTHOR_NAME }}/'"$AUTHOR_NAME"'/' LICENSE
 
