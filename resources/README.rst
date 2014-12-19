@@ -14,7 +14,7 @@ Requirements
 - ...
 
 Installation
-===========
+============
 
 - Install via pip::
 
