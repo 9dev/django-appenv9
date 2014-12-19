@@ -13,7 +13,7 @@ Requirements
 
 - ...
 
-Instalation
+Installation
 ===========
 
 - Install via pip::
