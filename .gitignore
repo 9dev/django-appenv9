@@ -1,4 +1,3 @@
-makefile
 django-test-project/
 django-test-project/*
 project_template.zip
