@@ -1,5 +1,11 @@
 dist/
 dist/*
+media/
+media/*
+cache/
+cache/*
+static/
+static/*
 *.egg-info/
 *.egg-info/*
 *.pyc
