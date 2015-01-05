@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Add our Django app to path
 import sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.insert(0, os.path.dirname(BASE_DIR))
 
 SECRET_KEY = '!@rf6@w&uz5b#8hk_^@b2fr^t163el(@0uf!xahiuc@k13hfru'
 DEBUG = True
@@ -43,6 +43,13 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+from django.conf import settings
+
+# Add our app's templates to TEMPLATE_DIRS
+TEMPLATE_DIRS = settings.TEMPLATE_DIRS + (       
+    os.path.join(os.path.dirname(BASE_DIR), 'templates'),
+)
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
