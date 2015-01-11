@@ -21,6 +21,7 @@ URL="https://pypi.python.org/pypi/$FULL_NAME"
 YEAR=$(date +"%Y")
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+APPDIR=$(pwd)
 
 cd $DIR
 	rm -f app_template.zip
@@ -28,7 +29,7 @@ cd $DIR
 
 	rm -f project_template.zip
 	zip -r project_template.zip project_template
-cd ..
+cd $APPDIR
 
 mkdir $FULL_NAME
 
