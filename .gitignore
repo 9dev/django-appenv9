@@ -2,3 +2,4 @@ django-test-project/
 django-test-project/*
 project_template.zip
 app_template.zip
+.todo
