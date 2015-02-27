@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 PREFIX=django-
-DJANGO_VERSION=1.6.5
-PYTHON_VERSION=2.7
+DJANGO_VERSION=1.7.4
+PYTHON_VERSION=3.4
 
 AUTHOR_NAME=$(git config user.name)
 AUTHOR_EMAIL=$(git config user.email)
@@ -34,8 +34,12 @@ cd $APPDIR
 mkdir $FULL_NAME
 
 cd $FULL_NAME
-
+	django-admin startproject --template="$DIR/project_template.zip" --extension=py,makefile demo
 	django-admin startapp --template="$DIR/app_template.zip" $SAFE_NAME
+
+	cd demo/virtualenv
+		virtualenv -p /usr/bin/python$PYTHON_VERSION demo
+	cd ../..
 
 	sed 's/{{ SAFE_NAME }}/'"$SAFE_NAME"'/' "$DIR/resources/MANIFEST.in" > MANIFEST.in
 	sed 's/{{ FULL_NAME }}/'"$FULL_NAME"'/' "$DIR/resources/README.rst" > README.rst
@@ -50,16 +54,10 @@ cd $FULL_NAME
 	sed -i 's/{{ AUTHOR_EMAIL }}/'"$AUTHOR_EMAIL"'/' setup.py
 	sed -i 's|{{ URL }}|'"$URL"'|' setup.py
 
-	django-admin startproject --template="$DIR/project_template.zip" demo
 	cd demo
 		sed -i 's/{{ DJANGO_VERSION }}/'"$DJANGO_VERSION"'/' requirements.txt
-		sed -i 's/{{ PYTHON_VERSION }}/'"$PYTHON_VERSION"'/' makefile
-		sed -i 's/||APP_NAME||/'"$SAFE_NAME"'/' makefile
 		cd demo
 			sed -i 's/||APP_NAME||/'"$SAFE_NAME"'/' settings.py
-		cd ..
-		cd virtualenv
-			virtualenv demo
 		cd ..
 		make install
 	cd ..

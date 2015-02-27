@@ -95,5 +95,15 @@ Before doing so, you probably also want to switch to MASTER branch and create a 
 Notes
 =====
 
-- Default version of Django is 1.6.5. If you want to change that, edit ``appenv9`` script and replace default settings with desired ones.
+- Default version of Django is 1.7.4. If you want to change that, edit ``appenv9`` script and replace default settings with desired ones.
 
+Changelog
+=========
+
+v0.2
+----
+
+- Upgraded schemas to Python 3.4 and Django 1.7.4.
+
+v0.1
+----
